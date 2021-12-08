@@ -38,10 +38,6 @@ class OauthTokenManager extends Component
      */
     public $enableToken = false;
     /**
-     * @var string token组件的标识，和uuid在db中配置的一致可以访问
-     */
-    public $flag;
-    /**
      * @var array 不在检查的URL
      */
     public $uncheckUrls = [];
@@ -177,16 +173,13 @@ class OauthTokenManager extends Component
     public function generateToken()
     {
         $accessUser = OauthUser::findOne([
-            'uuid' => $this->getUuid(),
+            'uuid'      => $this->getUuid(),
+            'is_enable' => IS_ENABLE_YES, // 启用状态
         ]);
         if (null === $accessUser) {
             throw new CustomException("不存在的系统访问key");
         }
         $today = Format::date();
-        // 标识检查
-        if (!in_array($this->flag, explode_data($accessUser->flag, '|'))) {
-            throw new CustomException("不是合法的UUID访问");
-        }
         // 生效日期验证
         if ($accessUser->expire_begin_date > "1900-01-01" && $accessUser->expire_begin_date > $today) {
             throw new CustomException("该用户未到访问期");

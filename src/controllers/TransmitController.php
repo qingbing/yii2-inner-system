@@ -21,6 +21,8 @@ use Zf\Helper\Exceptions\ProgramException;
 
 /**
  * 控制器 : 系统转发
+ * 作用域
+ *      - 后管(门户对其它系统的转发)
  *
  * Class TransmitController
  * @package YiiPortal\controllers
