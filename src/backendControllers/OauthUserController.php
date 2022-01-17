@@ -14,8 +14,6 @@ use YiiHelper\validators\SecurityOperateValidator;
 use YiiInnerSystem\backendControllers\interfaces\IOauthUserService;
 use YiiInnerSystem\backendControllers\services\OauthUserService;
 use YiiInnerSystem\models\OauthUser;
-use Zf\Helper\Traits\Models\TLabelEnable;
-use Zf\Helper\Traits\Models\TLabelYesNo;
 
 /**
  * 控制器: 授权账号管理
@@ -42,9 +40,9 @@ class OauthUserController extends RestController
         $params = $this->validateParams([
             ['uuid', 'string', 'label' => '用户标识'],
             ['remark', 'string', 'label' => '备注'],
-            ['is_enable', 'in', 'label' => '启用状态', 'range' => array_keys(TLabelEnable::enableLabels())],
+            ['is_enable', 'boolean', 'label' => '启用状态'],
             // 有效期规则
-            ['isExpire', 'in', 'label' => '是否有效', 'range' => array_keys(TLabelYesNo::isLabels())],
+            ['isExpire', 'boolean', 'label' => '是否有效'],
         ], null, true);
         // 业务处理
         $res = $this->service->list($params);
@@ -63,7 +61,7 @@ class OauthUserController extends RestController
         // 参数验证和获取
         $params = $this->validateParams([
             ['remark', 'required'],
-            ['is_enable', 'in', 'label' => '是否有效', 'range' => array_keys(TLabelYesNo::isLabels())],
+            ['is_enable', 'boolean', 'label' => '是否有效'],
             ['uuid', 'string', 'label' => '用户标识'],
             ['remark', 'string', 'label' => '描述'],
             [
@@ -95,7 +93,7 @@ class OauthUserController extends RestController
         $params = $this->validateParams([
             [['id'], 'required'],
             ['id', 'exist', 'label' => '授权账号ID', 'targetClass' => OauthUser::class, 'targetAttribute' => 'id'],
-            ['is_enable', 'in', 'label' => '是否有效', 'range' => array_keys(TLabelYesNo::isLabels())],
+            ['is_enable', 'boolean', 'label' => '是否有效'],
             ['remark', 'string', 'label' => '描述'],
             [
                 'expire_ip',
