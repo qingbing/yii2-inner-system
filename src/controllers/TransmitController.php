@@ -58,10 +58,10 @@ class TransmitController extends RestController
                 'class'  => InnerProxy::class,
                 'system' => $system,
             ]);
-        } else if (!Yii::$app->has($system->proxy)) {
+        } else if (!Yii::$app->has($system->proxy_id)) {
             throw new ProgramException("未设置系统「{$systemCode}」代理「{$system->type}」");
         } else {
-            $proxy = Yii::$app->get($system->proxy);
+            $proxy = Yii::$app->get($system->proxy_id);
         }
         /* @var SystemProxy $proxy */
         // 请求获取响应信息
